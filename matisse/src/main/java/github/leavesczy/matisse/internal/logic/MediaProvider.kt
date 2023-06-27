@@ -77,34 +77,56 @@ internal object MediaProvider {
 
 
 
-            Log.e("lzj", "loadResources: contentUri = ${if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                MediaStore.Video.Media.getContentUri(
-                    MediaStore.VOLUME_EXTERNAL
-                )
-            } else {
-                MediaStore.Video.Media.EXTERNAL_CONTENT_URI
-            }}")
-            Log.e("lzj", "loadResources: contentUri = ${MediaStore.Images.Media.EXTERNAL_CONTENT_URI}")
+            Log.e(
+                "lzj", "loadResources: contentUri = ${
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        MediaStore.Video.Media.getContentUri(
+                            MediaStore.VOLUME_EXTERNAL
+                        )
+                    } else {
+                        MediaStore.Video.Media.EXTERNAL_CONTENT_URI
+                    }
+                }"
+            )
+            Log.e(
+                "lzj",
+                "loadResources: contentUri = ${MediaStore.Images.Media.EXTERNAL_CONTENT_URI}"
+            )
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                Log.e("lzj", "loadResources: contentUri = ${MediaStore.Downloads.EXTERNAL_CONTENT_URI}")
+                Log.e(
+                    "lzj",
+                    "loadResources: contentUri = ${MediaStore.Downloads.EXTERNAL_CONTENT_URI}"
+                )
             }
-            Log.e("lzj", "loadResources: contentUri = ${MediaStore.Audio.Media.EXTERNAL_CONTENT_URI}")
-            Log.e("lzj", "loadResources: contentUri = ${MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI}")
-            Log.e("lzj", "loadResources: contentUri = ${MediaStore.Audio.Artists.EXTERNAL_CONTENT_URI}")
+            Log.e(
+                "lzj",
+                "loadResources: contentUri = ${MediaStore.Audio.Media.EXTERNAL_CONTENT_URI}"
+            )
+            Log.e(
+                "lzj",
+                "loadResources: contentUri = ${MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI}"
+            )
+            Log.e(
+                "lzj",
+                "loadResources: contentUri = ${MediaStore.Audio.Artists.EXTERNAL_CONTENT_URI}"
+            )
 
             val sortOrder = "$dateModifiedColumn DESC"
             val mediaResourceList = mutableListOf<MediaResource>()
             try {
                 val mediaCursor = context.contentResolver.query(
-                    Uri.parse("content://media/external/file"),
+//                    Uri.parse("content://media/external/file"),
+//                    projection,
+////                    "_data LIKE ? AND _id > ?",
+////                    arrayOf("/storage/emulated/0/DCIM/Camera%","-1"),
+//"(1)",
+//
+//null,
+
+                    contentUri,
                     projection,
-//                    "_data LIKE ? AND _id > ?",
-//                    arrayOf("/storage/emulated/0/DCIM/Camera%","-1"),
-"(1)",
-
-null,
-
-
+                    selection,
+                    selectionArgs,
 
                     sortOrder,
                 ) ?: return@withContext null
